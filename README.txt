@@ -13,73 +13,82 @@ USAGE:
 
 1. Simply download the bitly.php file and include it in your project directory
 
-2. Edit the first few lines of the file to use your own Bitly login and keys
+2. Instantiate the class with arguments for api keys, secrets, and login info
+```php
+$bitly = new Bitly( array(
+	'bitlyKey' => 'YOUR_BITLY_ASSIGNED_KEY',
+	'bitlyLogin' => 'YOUR_BITLY_LOGIN',
+	'bitlyClientId' => 'YOUR_BITLY_ASSIGNED_CLIENT_ID_FOR_OAUTH',
+	'bitlySecret' => 'YOUR_BITLY_ASSIGNED_CLIENT_SECRET_FOR_OAUTH'
+) );
+```
 
 3. Make sure to include the file whenever you want to access the bitly api functionality... include_once('bitly.php');
 
-4. Use any of the functions as such:
+4. Use any of the available public class methods as such:
+```php
+$results = $bitly->bitly_v3_shorten('http://knowabout.it', 'j.mp');
 
-$results = bitly_v3_shorten('http://knowabout.it', 'j.mp');
+$results = $bitly->bitly_v3_expand('dYhyia');
 
-$results = bitly_v3_expand('dYhyia');
+$results = $bitly->bitly_v3_expand(array('http://bit.ly/dYhyia','http://j.mp/dYhyia'));
 
-$results = bitly_v3_expand(array('http://bit.ly/dYhyia','http://j.mp/dYhyia'));
+$result = $bitly->bitly_v3_validate('USERS_LOGIN','USERS_APIKEY');
 
-$result = bitly_v3_validate('USERS_LOGIN','USERS_APIKEY');
+$results = $bitly->bitly_v3_clicks('dYhyia');
 
-$results = bitly_v3_clicks('dYhyia');
+$results = $bitly->bitly_v3_clicks(array('dYhyia','http://bit.ly/dYhyia'));
 
-$results = bitly_v3_clicks(array('dYhyia','http://bit.ly/dYhyia'));
+$results = $bitly->bitly_v3_referrers('grqSlY');
 
-$results = bitly_v3_referrers('grqSlY');
+$results = $bitly->bitly_v3_countries('grqSlY');
 
-$results = bitly_v3_countries('grqSlY');
+$results = $bitly->bitly_v3_clicks_by_minute(array('grqSlY','dYhyia'));
 
-$results = bitly_v3_clicks_by_minute(array('grqSlY','dYhyia'));
+$results = $bitly->bitly_v3_clicks_by_day(array('grqSlY','dYhyia'));
 
-$results = bitly_v3_clicks_by_day(array('grqSlY','dYhyia'));
+$results = $bitly->bitly_v3_bitly_pro_domain('nyti.ms');
 
-$results = bitly_v3_bitly_pro_domain('nyti.ms');
+$results = $bitly->bitly_v3_lookup('http://knowabout.it');
 
-$results = bitly_v3_lookup('http://knowabout.it');
+$results = $bitly->bitly_v3_lookup(array('http://knowabout.it','http://blog.botfu.com'));
 
-$results = bitly_v3_lookup(array('http://knowabout.it','http://blog.botfu.com'));
+$results = $bitly->bitly_v3_authenticate('USERS_LOGIN','USERS_PASSWORD');
 
-$results = bitly_v3_authenticate('USERS_LOGIN','USERS_PASSWORD');
+$results = $bitly->bitly_v3_info(array('grqSlY','dYhyia'));
 
-$results = bitly_v3_info(array('grqSlY','dYhyia'));
+$results = $bitly->bitly_oauth_access_token('CODE_ASSIGNED_BY_BITLY', 'THE_URL_YOU_WANT_BITLY_TO_REDIRECT_TO_WHEN_APP_IS_APPROVED_BY_USER');
 
-$results = bitly_oauth_access_token('CODE_ASSIGNED_BY_BITLY', 'THE_URL_YOU_WANT_BITLY_TO_REDIRECT_TO_WHEN_APP_IS_APPROVED_BY_USER');
+$results = $bitly->bitly_v3_user_clicks('USERS_ACCESS_TOKEN');
 
-$results = bitly_v3_user_clicks('USERS_ACCESS_TOKEN');
+$results = $bitly->bitly_v3_user_referrers('USERS_ACCESS_TOKEN');
 
-$results = bitly_v3_user_referrers('USERS_ACCESS_TOKEN');
+$results = $bitly->bitly_v3_user_countries('USERS_ACCESS_TOKEN');
 
-$results = bitly_v3_user_countries('USERS_ACCESS_TOKEN');
+$results = $bitly->bitly_v3_user_realtime_links('USERS_ACCESS_TOKEN');
 
-$results = bitly_v3_user_realtime_links('USERS_ACCESS_TOKEN');
+$results = $bitly->bitly_v3_highvalue('USERS_ACCESS_TOKEN');
 
-$results = bitly_v3_highvalue('USERS_ACCESS_TOKEN');
+$results = $bitly->bitly_v3_search('USERS_ACCESS_TOKEN', 'awesome');
 
-$results = bitly_v3_search('USERS_ACCESS_TOKEN', 'awesome');
+$results = $bitly->bitly_v3_realtime_bursting_phrases('USERS_ACCESS_TOKEN');
 
-$results = bitly_v3_realtime_bursting_phrases('USERS_ACCESS_TOKEN');
+$results = $bitly->bitly_v3_realtime_hot_phrases('USERS_ACCESS_TOKEN');
 
-$results = bitly_v3_realtime_hot_phrases('USERS_ACCESS_TOKEN');
+$results = $bitly->bitly_v3_realtime_clickrate('USERS_ACCESS_TOKEN', 'awesome');
 
-$results = bitly_v3_realtime_clickrate('USERS_ACCESS_TOKEN', 'awesome');
+$results = $bitly->bitly_v3_link_info('USERS_ACCESS_TOKEN', 'http://bit.ly/S4qgbT');
 
-$results = bitly_v3_link_info('USERS_ACCESS_TOKEN', 'http://bit.ly/S4qgbT');
+$results = $bitly->bitly_v3_link_content('USERS_ACCESS_TOKEN', 'http://bit.ly/S4qgbT');
 
-$results = bitly_v3_link_content('USERS_ACCESS_TOKEN', 'http://bit.ly/S4qgbT');
+$results = $bitly->bitly_v3_link_category('USERS_ACCESS_TOKEN', 'http://bit.ly/S4qgbT');
 
-$results = bitly_v3_link_category('USERS_ACCESS_TOKEN', 'http://bit.ly/S4qgbT');
+$results = $bitly->bitly_v3_link_social('USERS_ACCESS_TOKEN', 'http://bit.ly/S4qgbT');
 
-$results = bitly_v3_link_social('USERS_ACCESS_TOKEN', 'http://bit.ly/S4qgbT');
+$results = $bitly->bitly_v3_link_location('USERS_ACCESS_TOKEN', 'http://bit.ly/S4qgbT');
 
-$results = bitly_v3_link_location('USERS_ACCESS_TOKEN', 'http://bit.ly/S4qgbT');
-
-$results = bitly_v3_link_language('USERS_ACCESS_TOKEN', 'http://bit.ly/S4qgbT');
+$results = $bitly->bitly_v3_link_language('USERS_ACCESS_TOKEN', 'http://bit.ly/S4qgbT');
+```
 
 =============
 SPECIAL NOTE:
@@ -97,6 +106,7 @@ To use the new OAuth endpoints, you must first obtain an access token for a user
 SPECIAL THANKS:
 ==============
 
+Kevin Marshall (https://github.com/Falicon) - for original code base.
 Robin Monks (https://github.com/mozillamonks) - for great additional documentation and general suggestions/improvements.
 
 =======
@@ -104,13 +114,13 @@ CONTACT:
 =======
 
 As always, if you've got any questions, comments, or concerns about
-anything you find here, please feel free to drop me an email at info@falicon.com or find me on Twitter @falicon
+anything you find here, please feel free to submit issues via github: https://github/wturnerharris
 
 =======
 License:
 =======
 
-Copyright 2010 Kevin Marshall.
+Copyright 2013 Wes Turner.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
